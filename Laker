@@ -1,0 +1,66 @@
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
+
+
+#Lakers W/L from 2003 to 2023
+lakers_seasons = [
+    {"Year": 2003, "wins": 50, "losses": 32},
+    {"Year": 2004, "wins": 56, "losses": 26},
+    {"Year": 2005, "wins": 34, "losses": 48},
+    {"Year": 2006, "wins": 45, "losses": 37},
+    {"Year": 2007, "wins": 42, "losses": 40},
+    {"Year": 2008, "wins": 57, "losses": 25},
+    {"Year": 2009, "wins": 65, "losses": 17},
+    {"Year": 2010, "wins": 57, "losses": 25},
+    {"Year": 2011, "wins": 57, "losses": 25},
+    {"Year": 2012, "wins": 41, "losses": 25},
+    {"Year": 2013, "wins": 45, "losses": 37},
+    {"Year": 2014, "wins": 27, "losses": 55},
+    {"Year": 2015, "wins": 21, "losses": 61},
+    {"Year": 2016, "wins": 17, "losses": 65},
+    {"Year": 2017, "wins": 26, "losses": 56},
+    {"Year": 2018, "wins": 35, "losses": 47},
+    {"Year": 2019, "wins": 37, "losses": 45},
+    {"Year": 2020, "wins": 52, "losses": 19},
+    {"Year": 2021, "wins": 42, "losses": 30},
+    {"Year": 2022, "wins": 33, "losses": 49},
+    {"Year": 2023, "wins": 43, "losses": 39},
+]
+
+lakers_seasons
+
+
+#Function for W/L
+years = range(2003, 2024)
+for i, season in enumerate(lakers_seasons):
+    w_l_percentage = season["wins"] / (season["wins"] + season["losses"])
+    print(f"Los Angeles Lakers {years[i]} Win/Loss Percentage: {w_l_percentage:.2%}")
+
+
+#Function for 4 Lists
+def find_top_season(years, wins, losses, ties=None):
+    if ties is None:
+        ties = [0] * len(years)
+
+    top_percentage = 0
+    top_season = None
+
+    for year, win, loss, tie in zip(years, wins, losses, ties):
+        tie = 0 if tie is None else tie
+        total_games = win + loss + tie
+        w_l_percentage = win / total_games if total_games > 0 else 0
+
+        if w_l_percentage > top_percentage or (w_l_percentage == top_percentage and year > top_season):
+            top_percentage = w_l_percentage
+            top_season = year
+
+    return top_season, top_percentage
+
+#Lists:
+season_years = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+season_wins = [50, 56, 34, 45, 42, 57, 65, 57, 57, 41, 45, 27, 21, 17, 26, 35, 37, 52, 42, 33, 43]
+season_losses = [32, 26, 48, 37, 40, 25, 17, 25, 25, 25, 37, 55, 61, 65, 56, 47, 45, 19, 30, 49, 39]
+season_ties = [None] * len(season_years)
+
+top_season, top_percentage = find_top_season(season_years, season_wins, season_losses, season_ties)
+print(f"Top Season: {top_season}, Win/Loss Percentage: {top_percentage:.2%}")
